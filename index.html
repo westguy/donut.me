@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css"></link> <!--stylesheet-->
+    <script>
+        function populateTable(data){ //populates our table object of choice with divs displaying weather reports
+            $("#output").empty() //empty our output element first
+            var businesses = data.businesses;
+            for(i = 0; i < businesses.length; i++){
+                var name = businesses[i].name;
+                var price = businesses[i].price;
+                var image_url = businesses[i].image_url;
+                var report = "<div>" + price + "<br>" + name + "<img src=" + image_url + "></img></div>";
+                $("#output").append(report);
+            }
+        }
+
+        function getDonuts(){
+            var url = window.location + "donuts"; 
+            $.ajax({type: "GET", url: url, dataType: "json", success: function(data){
+                    populateTable(data);
+                },
+                error: function(xhr, ajaxOptions, thrownError){
+                    alert("Could not locate resource");
+                }
+
+            });
+        }
+        $(document).ready(function(){
+            $("#request").click(function(){ //on this button click, invoke our functions and display the reports
+                getDonuts();
+                //.hide().appendTo("#output").fadeIn();
+            });
+        });
+    </script>
+
+    <title>Find Donuts Now</title>
+</head>
+
+<body>
+    <div data-role="header" class="header"><h1>Donut.me</h1></div>
+    <button id="request">Find Donuts</button>
+    <div id="output">
+    </div>
+    <div data-role="footer" class="header"><h1>CS275</h1></div>
+</body>
+</html>

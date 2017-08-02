@@ -1,0 +1,30 @@
+#output{
+    margin: auto;
+    border-style: solid;
+    border-color: red;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#output div{
+    width: 128px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: teal;
+    padding: 2px;
+}
+
+#output img{
+    width: 40px;
+    height: 40px;
+}
+
+#request{
+    background-color: teal;
+    border-color: red;
+}
+
+.header{
+    text-align: center;
+    background-color: lightslategrey;
+}
