@@ -1,4 +1,4 @@
-#donut.me - food service locator
+# donut.me - food service locator
 
-##Tristan West | Bryce Eller | Kyle Eng | Mashour Rahman
+## Tristan West | Bryce Eller | Kyle Eng | Mashour Rahman
 
