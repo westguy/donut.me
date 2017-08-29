@@ -14,10 +14,16 @@ app.get("/", function(req, res){
 });
 
 app.get("/donuts", function(req, res){
+	console.log(req.query.term);
+	console.log(req.query.zip);
+	var path = "/v3/businesses/search?term=";
+	path += req.query.term;
+	path += "&location=";
+	path += req.query.zip;
     var token = "Bearer tFAr5YtkP-r7ZPR5Aj6-Ck5gfKXFKoDOrqjZ3-nuHVFppkMf0D_PxnEibe8bdNdKIx8WN7wa_osnRj4Yjc-D5SkkgSw9hadK7oAkQK2fFBEYLqjEh8T9WXSqV4p7WXYx";
     var options = {
         hostname: "api.yelp.com",
-        path: "/v3/businesses/search?term=donuts&location=19104",
+        path: path,
         method: "GET",
         headers: {
             "Authorization": token
@@ -38,5 +44,3 @@ app.get("/donuts", function(req, res){
         });
     }).end();
 });
-
-
