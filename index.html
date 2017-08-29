@@ -16,16 +16,16 @@
                 $("#output").append(report);
             }
         }
-
         function getDonuts(){
-            var url = window.location + "donuts"; 
+            var url = window.location + "donuts" + "?term=" + document.getElementById("term").value;
+			url += "&zip="; 
+			url += document.getElementById("zip").value;
             $.ajax({type: "GET", url: url, dataType: "json", success: function(data){
                     populateTable(data);
                 },
                 error: function(xhr, ajaxOptions, thrownError){
                     alert("Could not locate resource");
                 }
-
             });
         }
         $(document).ready(function(){
@@ -41,9 +41,12 @@
 
 <body>
     <div data-role="header" class="header"><h1>Donut.me</h1></div>
-    <button id="request">Find Donuts</button>
+	<center>
+	<input type="text" placeholder="What are you looking for?" id="term"><br><input type="text" placeholder="Your zip code" id="zip"><br>
+    <button id="request">Yum</button>
+	<br><br>
     <div id="output">
-    </div>
+    </div></center>
     <div data-role="footer" class="header"><h1>CS275</h1></div>
 </body>
 </html>
