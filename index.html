@@ -14,8 +14,9 @@
                 var name = businesses[i].name;
                 var price = businesses[i].price;
                 var image_url = businesses[i].image_url;
+                var website = businesses[i].url;
                 var address = businesses[i].location.display_address
-                var report = report + "<li><b>" + name + "</b><br>" + price + "<br>"+ address +"<br> <img style='width:25%; height:25%' src=" + image_url + "></img></li><hr>";
+                var report = report + "<li><b>" + name + "</b><br>" + price + "<br>"+ address +"<br> <a href = " + website +"><img style='width:25%; height:25%' src=" + image_url + "></img></a></li><hr>";
             }
             report += "</ul>"
             $("#output").append(report);
