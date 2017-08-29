@@ -8,13 +8,17 @@
         function populateTable(data){ //populates our table object of choice with divs displaying weather reports
             $("#output").empty() //empty our output element first
             var businesses = data.businesses;
-            for(i = 0; i < businesses.length; i++){
+
+            report = "<ul style='padding:0; width:100%; list-style-type:none; text-align:center'>"
+            for(i = 0; i < 5; i++){
                 var name = businesses[i].name;
                 var price = businesses[i].price;
                 var image_url = businesses[i].image_url;
-                var report = "<div>" + price + "<br>" + name + "<img src=" + image_url + "></img></div>";
-                $("#output").append(report);
+                var address = businesses[i].location.display_address
+                var report = report + "<li><b>" + name + "</b><br>" + price + "<br>"+ address +"<br> <img style='width:25%; height:25%' src=" + image_url + "></img></li><hr>";
             }
+            report += "</ul>"
+            $("#output").append(report);
         }
 
         function getDonuts(){
@@ -42,7 +46,7 @@
 <body>
     <div data-role="header" class="header"><h1>Donut.me</h1></div>
     <button id="request">Find Donuts</button>
-    <div id="output">
+    <div id="output" style="text-align:center">
     </div>
     <div data-role="footer" class="header"><h1>CS275</h1></div>
 </body>
