@@ -14,8 +14,6 @@ app.get("/", function(req, res){
 });
 
 app.get("/donuts", function(req, res){
-	console.log(req.query.term);
-	console.log(req.query.zip);
 	var path = "/v3/businesses/search?term=";
 	path += req.query.term;
 	path += "&location=";
