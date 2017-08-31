@@ -8,24 +8,29 @@
         function populateTable(data){ //populates our table object of choice with divs displaying weather reports
             $("#output").empty() //empty our output element first
             var businesses = data.businesses;
-            for(i = 0; i < businesses.length; i++){
+
+            report = "<ul style='padding:0; width:100%; list-style-type:none; text-align:center'>"
+            for(i = 0; i < 5; i++){
                 var name = businesses[i].name;
                 var price = businesses[i].price;
                 var image_url = businesses[i].image_url;
-                var report = "<div>" + price + "<br>" + name + "<img src=" + image_url + "></img></div>";
-                $("#output").append(report);
+                var website = businesses[i].url;
+                var address = businesses[i].location.display_address
+                var report = report + "<li><b>" + name + "</b><br>" + price + "<br>"+ address +"<br> <a href = " + website +"><img style='width:25%; height:25%' src=" + image_url + "></img></a></li><hr>";
             }
+            report += "</ul>"
+            $("#output").append(report);
         }
-
         function getDonuts(){
-            var url = window.location + "donuts"; 
+            var url = window.location + "donuts" + "?term=" + document.getElementById("term").value;
+			url += "&zip="; 
+			url += document.getElementById("zip").value;
             $.ajax({type: "GET", url: url, dataType: "json", success: function(data){
                     populateTable(data);
                 },
                 error: function(xhr, ajaxOptions, thrownError){
                     alert("Could not locate resource");
                 }
-
             });
         }
         $(document).ready(function(){
@@ -41,9 +46,12 @@
 
 <body>
     <div data-role="header" class="header"><h1>Donut.me</h1></div>
-    <button id="request">Find Donuts</button>
+	<center>
+	<input type="text" placeholder="What are you looking for?" id="term"><br><input type="text" placeholder="Your zip code" id="zip"><br>
+    <button id="request">Yum</button>
+	<br><br>
     <div id="output">
-    </div>
+    </div></center>
     <div data-role="footer" class="header"><h1>CS275</h1></div>
 </body>
 </html>
