@@ -1,5 +1,7 @@
 var express = require("express");
+var cookieparser = require("cookie-parser");
 var app = express();
+app.use(cookieparser());
 var https = require("https");
 var fs = require("fs");
 var index = fs.readFileSync("index.html");
