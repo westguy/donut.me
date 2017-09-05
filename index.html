@@ -16,7 +16,7 @@
                 var image_url = businesses[i].image_url;
                 var website = businesses[i].url;
                 var address = businesses[i].location.display_address
-                var report = report + "<li><b>" + name + "</b><br>" + price + "<br>"+ address +"<br> <a href = " + website +"><img style='width:25%; height:25%' src=" + image_url + "></img></a></li><hr>";
+                var report = report + "<li><b>" + name + "</b><br>" + price + "<br>"+ address +"<br> <a href = " + website +"><img style='width:10%; height:10%' src=" + image_url + "></img></a></li><hr>";
             }
             report += "</ul>"
             $("#output").append(report);
@@ -56,11 +56,24 @@
         });
     </script>
 
-    <title>Find Donuts Now</title>
+    <div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
+    <title>Find Donuts Now...among other foodstuffs</title>
 </head>
 
 <body>
-    <div data-role="header" class="header"><h1>Donut.me</h1></div>
+    <div data-role="header" class="header">
+    <div style = "float:left; display:inline" class="fb-like" data-href="https://www.facebook.com/Donutme-701645953358144/" data-width="300" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true">
+    </div>
+    </br></br>
+    <h1 style = "display:inline">Donut.me</h1></div>
 	<center>
 	<input type="text" placeholder="What are you looking for?" id="term"><br><input type="text" placeholder="Your zip code" id="zip"><br>
     <button id="request">Yum</button>
