@@ -44,3 +44,7 @@ app.get("/donuts", function(req, res){
         });
     }).end();
 });
+
+app.get("/cookie", function(req, res){
+    res.cookie('name', 'express').send('cookie set');
+});

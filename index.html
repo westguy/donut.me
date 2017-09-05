@@ -25,11 +25,24 @@
             var url = window.location + "donuts" + "?term=" + document.getElementById("term").value;
 			url += "&zip="; 
 			url += document.getElementById("zip").value;
-            $.ajax({type: "GET", url: url, dataType: "json", success: function(data){
+            $.ajax({type: "GET", url: url, dataType: "json",
+                success: function(data){
                     populateTable(data);
                 },
                 error: function(xhr, ajaxOptions, thrownError){
                     alert("Could not locate resource");
+                }
+            });
+        }
+        function getCookie(){
+            var url = window.location + "cookie";
+            alert(url);
+            $.ajax({type: "GET", url: url, credentials: "include",
+                success: function(data){
+                    alert(document.cookie);
+                },
+                error: function(xhr, ajaxOptions, thrownError){
+                    alert("Could not fetch cookie");
                 }
             });
         }
@@ -38,6 +51,8 @@
                 getDonuts();
                 //.hide().appendTo("#output").fadeIn();
             });
+            getCookie();
+
         });
     </script>
 
