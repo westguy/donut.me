@@ -52,8 +52,6 @@ app.get("/donuts", function(req, res){
 
     var req = https.request(options, function(response) {
         var data = "";
-        console.log("Status: " + response.statusCode);
-        console.log("Headers: " + JSON.stringify(response.headers));
         response.setEncoding("utf8");
         response.on("data", function (body) {
             data += body;
@@ -66,20 +64,24 @@ app.get("/donuts", function(req, res){
 });
 
 app.get("/cookie", function(req, res){
-    var id = uniqid();
     var zipcode = req.query.zipcode;
-    console.log(id, zipcode);
-    res.cookie("id", id).send('cookie set');
-    sock.query("INSERT INTO users(id, zipcode) VALUES('" + id + "', '" + zipcode + "')", function(err, result){
-        if(err) throw err;
-    });
+    if(zipcode){
+        var id = uniqid();
+        res.cookie("id", id).send('cookie set');
+        sock.query("INSERT INTO users(id, zipcode) VALUES('" + id + "', '" + zipcode + "')", function(err, result){
+            if(err) throw err;
+            console.log(id, zipcode, "added to database");
+        });
+    }
+    else
+        console.log("No zipcode entered");
+    res.end();
 });
 
 app.get("/lookup", function(req, res){ //If the user has no cookie this returns an empty JS object
     var id = req.cookies.id;
     sock.query("SELECT * FROM users WHERE id = '" + id + "'", function(err, result){
         if(err) throw err;
-        console.log(result);
         res.send(result);
     });
 });

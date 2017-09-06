@@ -40,10 +40,8 @@
         }
         function getCookie(){
             var url = window.location + "cookie" + "?zipcode=" + document.getElementById("zip").value;
-            alert(url);
             $.ajax({type: "GET", url: url, credentials: "include",
                 success: function(data){
-                    alert(document.cookie);
                 },
                 error: function(xhr, ajaxOptions, thrownError){
                     alert("Could not fetch cookie");
@@ -52,8 +50,9 @@
         }
         $(document).ready(function(){
             $("#request").click(function(){ //on this button click, invoke our functions and display the reports
+                if(!document.cookie)
+                    getCookie();
                 getDonuts();
-                getCookie();
                 //.hide().appendTo("#output").fadeIn();
             });
         });
@@ -76,7 +75,7 @@
       <div style = "float:left; display:inline" class="fb-like" data-href="https://www.facebook.com/Donutme-701645953358144/" data-width="300" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true">
       </div>
       </br></br>
-      <h1 class="white-text" style = "display:inline">Donut.me (no cookie)</h1>
+      <h1 class="white-text" style = "display:inline">Donut.me</h1>
     </header>
     <div class="wrapper">
       <center>

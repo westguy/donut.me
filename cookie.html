@@ -40,10 +40,9 @@
         }
         function getZip(){
             var url = window.location + "lookup";
-            alert(url);
             $.ajax({type: "GET", url: url, dataType: "json",
                 success: function(data){
-                    alert(data);
+                    $("#zip").val(data[0].zipcode);
                 },
                 error: function(xhr, ajaxOptions, thrownError){
                     alert("Could not fetch zipcode");
@@ -51,11 +50,11 @@
             });
         }
         $(document).ready(function(){
+            getZip();
             $("#request").click(function(){ //on this button click, invoke our functions and display the reports
                 getDonuts();
                 //.hide().appendTo("#output").fadeIn();
             });
-            getZip();
 
         });
     </script>
