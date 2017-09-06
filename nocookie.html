@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css"></link> <!--stylesheet-->
+    <script>
+        function populateTable(data){ //populates our table object of choice with divs displaying weather reports
+            $("#output").empty() //empty our output element first
+            var businesses = data.businesses;
+
+            report = "<ul class='collection z-depth-4' style='padding:0; width:100%; list-style-type:none; text-align:center'>"
+            for(i = 0; i < 5; i++){
+                var name = businesses[i].name;
+                var price = businesses[i].price;
+                var image_url = businesses[i].image_url;
+                var website = businesses[i].url;
+                var address = businesses[i].location.display_address
+                var report = report + "<li class='collection-item z-depth-4'>" + "<a href = " + website +"><img class='circle responsive-img' style='width:16%; height:16%' src=" + image_url + "></img></a>" + "<span><b>" + name + "</b><br>" + price + "<br>"+ address +"<br></span>" +"</li>";
+            }
+            report += "</ul>"
+            $("#output").append(report);
+        }
+        function getDonuts(){
+            var url = window.location + "donuts" + "?term=" + document.getElementById("term").value.replace(/ /g,"");
+			url += "&zip="; 
+			url += document.getElementById("zip").value;
+            $.ajax({type: "GET", url: url, dataType: "json",
+                success: function(data){
+                    populateTable(data);
+                },
+                error: function(xhr, ajaxOptions, thrownError){
+                    alert("Could not locate resource");
+                }
+            });
+        }
+        function getCookie(){
+            var url = window.location + "cookie" + "?zipcode=" + document.getElementById("zip").value;
+            alert(url);
+            $.ajax({type: "GET", url: url, credentials: "include",
+                success: function(data){
+                    alert(document.cookie);
+                },
+                error: function(xhr, ajaxOptions, thrownError){
+                    alert("Could not fetch cookie");
+                }
+            });
+        }
+        $(document).ready(function(){
+            $("#request").click(function(){ //on this button click, invoke our functions and display the reports
+                getDonuts();
+                getCookie();
+                //.hide().appendTo("#output").fadeIn();
+            });
+        });
+    </script>
+
+    <div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
+    <title>Find Donuts Now...among other foodstuffs</title>
+</head>
+
+<body>
+    <header class="header light-green darken-2">
+      <div style = "float:left; display:inline" class="fb-like" data-href="https://www.facebook.com/Donutme-701645953358144/" data-width="300" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true">
+      </div>
+      </br></br>
+      <h1 class="white-text" style = "display:inline">Donut.me (no cookie)</h1>
+    </header>
+    <div class="wrapper">
+      <center>
+      <div class="row">
+       <div class="input-field col s6">
+        <input type="text" id="term">
+        <label for="term">What are you looking for?</label>
+       </div>
+       <div class="input-field col s6">
+        <input type="text" id="zip">
+        <label for="zip">Your zip code</label>
+       </div>
+      </div>
+      <a id="request" class="waves-effect waves-light light-blue darken-1 btn"><i class="material-icons right">restaurant</i>Yum</a>
+      <!-- <br>
+      <button id="request">Yum</button> -->
+      <br><br>
+      <div id="output"></div>
+      </center>
+      <div class="push"></div>
+    </div>
+    <div data-role="footer" class="footer light-green darken-2"><h1 class="white-text">CS275</h1></div>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+</body>
+</html>

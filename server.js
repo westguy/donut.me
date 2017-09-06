@@ -1,18 +1,38 @@
-var express = require("express");
 var cookieparser = require("cookie-parser");
-var app = express();
-app.use(cookieparser());
 var https = require("https");
 var fs = require("fs");
-var index = fs.readFileSync("index.html");
+var express = require("express");
+var uniqid = require("uniqid");
+var mysql = require("mysql");
+var app = express();
+app.use(cookieparser());
+var cookie = fs.readFileSync("cookie.html");
+var nocookie = fs.readFileSync("nocookie.html");
 
 app.use(express.static("."));
+
+var sock = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "memes",
+    database: "donutme"
+});
+
+sock.connect(function(err){
+    if(err) throw err;
+    console.log("Connected to mysql database");
+});
+
 app.listen(8080,function(){
     console.log("Server Running…");
 });
 
 app.get("/", function(req, res){
-    res.send(index);
+    var id = req.cookies.id;
+    if(id)
+        res.end(cookie);
+    else
+        res.end(nocookie);
 });
 
 app.get("/donuts", function(req, res){
@@ -46,5 +66,20 @@ app.get("/donuts", function(req, res){
 });
 
 app.get("/cookie", function(req, res){
-    res.cookie('name', 'express').send('cookie set');
+    var id = uniqid();
+    var zipcode = req.query.zipcode;
+    console.log(id, zipcode);
+    res.cookie("id", id).send('cookie set');
+    sock.query("INSERT INTO users(id, zipcode) VALUES('" + id + "', '" + zipcode + "')", function(err, result){
+        if(err) throw err;
+    });
+});
+
+app.get("/lookup", function(req, res){ //If the user has no cookie this returns an empty JS object
+    var id = req.cookies.id;
+    sock.query("SELECT * FROM users WHERE id = '" + id + "'", function(err, result){
+        if(err) throw err;
+        console.log(result);
+        res.send(result);
+    });
 });

@@ -26,7 +26,7 @@
             $("#output").append(report);
         }
         function getDonuts(){
-            var url = window.location + "donuts" + "?term=" + document.getElementById("term").value;
+            var url = window.location + "donuts" + "?term=" + document.getElementById("term").value.replace(/ /g,"");
 			url += "&zip="; 
 			url += document.getElementById("zip").value;
             $.ajax({type: "GET", url: url, dataType: "json",
@@ -38,15 +38,15 @@
                 }
             });
         }
-        function getCookie(){
-            var url = window.location + "cookie";
+        function getZip(){
+            var url = window.location + "lookup";
             alert(url);
-            $.ajax({type: "GET", url: url, credentials: "include",
+            $.ajax({type: "GET", url: url, dataType: "json",
                 success: function(data){
-                    alert(document.cookie);
+                    alert(data);
                 },
                 error: function(xhr, ajaxOptions, thrownError){
-                    alert("Could not fetch cookie");
+                    alert("Could not fetch zipcode");
                 }
             });
         }
@@ -55,7 +55,7 @@
                 getDonuts();
                 //.hide().appendTo("#output").fadeIn();
             });
-            getCookie();
+            getZip();
 
         });
     </script>
